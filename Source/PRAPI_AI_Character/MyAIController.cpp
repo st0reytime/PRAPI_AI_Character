@@ -37,7 +37,7 @@ void AMyAIController::SetupPerceptionSystem()
 	{
 		//create and set perception component
 		SetPerceptionComponent(*CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("Perception Component")));
-		SightConfig->SightRadius = 400.f;
+		SightConfig->SightRadius = 500.f;
 		SightConfig->LoseSightRadius = SightConfig->SightRadius + 50.f;
 		SightConfig->PeripheralVisionAngleDegrees = 90.f;
 		SightConfig->SetMaxAge(5.f);//Time after player is forgotten once seen
