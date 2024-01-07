@@ -8,6 +8,7 @@
 #include "Perception/AISenseConfig_Hearing.h"
 #include "PRAPI_AI_CharacterCharacter.h"
 #include "BehaviorTree/BlackboardComponent.h"
+#include "SoundDefinitions.h"
 
 AMyAIController::AMyAIController(FObjectInitializer const& ObjectInitializer)
 {
@@ -51,6 +52,15 @@ void AMyAIController::SetupPerceptionSystem()
 		GetPerceptionComponent()->OnTargetPerceptionUpdated.AddDynamic(this, &AMyAIController::OnTargetDetected);
 		GetPerceptionComponent()->ConfigureSense(*SightConfig);
 	}
+	HearingConfig = CreateDefaultSubobject<UAISenseConfig_Hearing>(TEXT("Hearing Config"));
+	if (HearingConfig)
+	{
+		HearingConfig->HearingRange = 3000.0f;
+		HearingConfig->DetectionByAffiliation.bDetectEnemies = true;
+		HearingConfig->DetectionByAffiliation.bDetectFriendlies = true;
+		HearingConfig->DetectionByAffiliation.bDetectNeutrals = true;
+
+	}
 }
 
 void AMyAIController::OnTargetDetected(AActor* Actor, FAIStimulus const Stimulus)
@@ -59,4 +69,5 @@ void AMyAIController::OnTargetDetected(AActor* Actor, FAIStimulus const Stimulus
 	{
 		GetBlackboardComponent()->SetValueAsBool("CanSeePlayer", Stimulus.WasSuccessfullySensed());
 	}
+
 }
